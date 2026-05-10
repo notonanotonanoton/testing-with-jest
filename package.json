@@ -12,7 +12,6 @@
   },
   "license": "MIT",
   "author": "Anton Olsen",
-  "type": "commonjs",
   "main": "src/index.js",
   "directories": {
     "test": "tests"
