@@ -8,6 +8,10 @@ const defaultTimeout = 10000;
 let driver;
 jest.setTimeout(1000 * 60 * 5); // 5 minuter
 
+beforeEach(async () => {
+    await driver.get(fileUnderTest);
+});
+
 // Det här körs innan vi kör testerna för att säkerställa att Firefox är igång
 beforeAll(async () => {
 console.log(fileUnderTest);
@@ -36,7 +40,12 @@ describe('Clicking "Pusha till stacken"', () => {
 });
 
 describe('Clicking "Pusha till stacken", "Poppa stacken!", and "Vad finns överst på stacken?"', () => {
-    it('should push, peek, and pop a value', async () => {
+    it('The stack should be empty in the beginning', async () => {
+        let stack = await driver.findElement(By.id('top_of_stack')).getText();
+        expect(stack).toEqual("n/a");
+    });
+
+    it('should push and pop a value, then peek an empty stack', async () => {
         let push = await driver.findElement(By.id('push'));
         await push.click();
         let alert = await driver.switchTo().alert();
