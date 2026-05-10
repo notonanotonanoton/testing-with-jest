@@ -34,3 +34,27 @@ describe('Clicking "Pusha till stacken"', () => {
         await alert.accept();
     });
 });
+
+describe('Clicking "Pusha till stacken", "Poppa stacken!", and "Vad finns överst på stacken?"', () => {
+    it('should push, peek, and pop a value', async () => {
+        let push = await driver.findElement(By.id('push'));
+        await push.click();
+        let alert = await driver.switchTo().alert();
+        await alert.sendKeys("3");
+        await alert.accept();
+
+        driver.switchTo().window(driver.getWindowHandle());
+
+        let stack = await driver.findElement(By.id('top_of_stack')).getText();
+        expect(stack).toEqual("3");
+
+        let pop = await driver.findElement(By.id('pop'));
+        await pop.click();
+        await alert.accept();
+        
+        let peek = await driver.findElement(By.id('peek'));
+        await peek.click();
+        stack = await driver.findElement(By.id('top_of_stack')).getText();
+        expect(stack).toEqual("undefined");
+    })
+})
